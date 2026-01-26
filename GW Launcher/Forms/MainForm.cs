@@ -83,6 +83,15 @@ public partial class MainForm : Form
 		Activate();
 	}
 
+    protected override void WndProc(ref Message m)
+    {
+        if (m.Msg == 0x8000) // WM_APP
+        {
+            Program.QueueLaunch((int)m.WParam); // account index
+        }
+        base.WndProc(ref m);
+    }
+
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
         _instance = null;
